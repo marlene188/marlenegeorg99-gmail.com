@@ -1,18 +1,33 @@
-# Cyber Security Chatbot
+# 🤖 BABI-Bot (Cyber AI Assistant)
 
-A simple AI chatbot built with HTML, CSS, and JavaScript.
+BABI-Bot is a simple AI chatbot web app built with HTML, CSS, and JavaScript.
 
-## Features
-- Chat interface
-- Answers questions
-- Works in browser
-- Hosted on Vercel
+It can answer questions about:
+- Cybersecurity
+- Programming
+- Python
+- Coding help
 
-## How to run locally
+The app uses:
+- Frontend: HTML, CSS, JavaScript
+- Backend: Serverless API (chat.js)
+- AI: OpenAI API
+- Hosting: Vercel
+- PWA support (offline caching with service worker)
+
+## Files
+index.html → main page  
+style.css → design  
+script.js → frontend chat logic  
+chat.js → backend API route  
+manifest.json → PWA settings  
+service-worker.js → offline support  
+
+## Run locally
 Open index.html in your browser.
 
-## Deployment
-Deployed using Vercel.
+## Deploy
+Upload to GitHub and deploy with Vercel.
 
 ## Author
-Your Name
+Babi
