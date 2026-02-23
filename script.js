@@ -1,30 +1,14 @@
-// get elements
-const messages = document.getElementById("messages");
-const input = document.getElementById("input");
+const input = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
 
-
-// add message to chat
-function addMessage(text, type) {
-  const div = document.createElement("div");
-  div.className = "msg " + type;
-  div.innerText = text;
-  messages.appendChild(div);
-
-  messages.scrollTop = messages.scrollHeight;
-}
-
-
-// send message to server
 async function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
+  const message = input.value.trim();
+  if (!message) return;
 
-  // show user message
-  addMessage(text, "user");
+  addMessage("You", message);
   input.value = "";
 
-  // show typing
-  addMessage("Typing...", "bot");
+  addMessage("Bot", "Typing...");
 
   try {
     const res = await fetch("/.netlify/functions/chat", {
@@ -32,27 +16,20 @@ async function sendMessage() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({ message })
     });
 
     const data = await res.json();
 
-    // remove typing
-    messages.lastChild.remove();
-
-    // show bot reply
-    addMessage(data.reply, "bot");
+    chatBox.lastChild.textContent = "Bot: " + data.reply;
 
   } catch (err) {
-    messages.lastChild.remove();
-    addMessage("Server error. Try again.", "bot");
+    chatBox.lastChild.textContent = "Bot: Error connecting to server.";
   }
 }
 
-
-// press Enter to send
-input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    sendMessage();
-  }
-});
+function addMessage(sender, text) {
+  const div = document.createElement("div");
+  div.textContent = sender + ": " + text;
+  chatBox.appendChild(div);
+}
