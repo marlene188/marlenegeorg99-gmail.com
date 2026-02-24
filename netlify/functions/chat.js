@@ -2,19 +2,16 @@ exports.handler = async (event) => {
   try {
     const { message } = JSON.parse(event.body);
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a helpful cybersecurity assistant." },
-          { role: "user", content: message }
-        ]
-      })
+        model: "gpt-4.1-mini",
+        input: message
+      }),
     });
 
     const data = await response.json();
@@ -22,16 +19,13 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        reply: data.choices[0].message.content
-      })
+        reply: data.output[0].content[0].text
+      }),
     };
-
-  } catch (error) {
+  } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        reply: "Server error. Check API key."
-      })
+      body: JSON.stringify({ error: err.message }),
     };
   }
 };
