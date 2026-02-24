@@ -1,4 +1,4 @@
-const CACHE = "cyber-ai-cache-v1";
+const CACHE =  "chatbot-cache-v2";
 
 const FILES = [
   "index.html",
